@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: in memory datas API
+  description: Тестовое задание
+  version: 0.1.9
+
+paths:
+  /api/lifo:
+    get:
+      summary: Get top of stack
+      description: Returns top element of stack or if empt -> null
+      tags:
+        - Стек LIFO
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: number
+                    default: null
+  /api/lifo/add:
+    post:
+      summary: Add new element to top of stack
+      tags:
+        - Стек LIFO
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              value:
+                type: string
+      responses:
+        "200":
+          description: Succesfuly added
+  /api/memo:
+    get:
+      summary: Get value by key
+      description: Returns value by key
+      tags:
+        - KeyValue
+      parameters:
+        - in: query
+          name: key
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    default: {}
+  /api/memo/set:
+    post:
+      summary: Add new key value pair with ttl(optional)
+      tags:
+        - KeyValue
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+              ttl:
+                type: integer
+                default: null
+      responses:
+        "200":
+          description: Succesfuly added
+  /api/memo/{key}:
+    delete:
+      summary: Delete value by key
+      description: Deletes by key
+      tags:
+        - KeyValue
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema:
+            type: string
+      responses:
+        "200": # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: 1
